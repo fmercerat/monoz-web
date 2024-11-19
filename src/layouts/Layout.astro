@@ -1,0 +1,61 @@
+---
+import '../styles/global.css'
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+		<title>{title}</title>
+	</head>
+	<body>
+		<nav>
+			<div class="hamburger">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+			<ul>
+				<li><a href="/">Inicio</a></li>
+				<li><a href="/sobremi">Sobre Mí</a></li>
+				<li><a href="#buildorders">Guía de Build Orders</a></li>
+				<li><a href="#torneos">Torneos</a></li>
+				<li><a href="/coaching">Coaching</a></li>
+				<li><a href="https://liquipedia.net/ageofempires/Monoz">Liquipedia</a></li>
+				<li><a href="https://aoe2recs.com/profile/1861822">Dashboard</a></li>
+				<li><a href="#clanzz">Clan zZ</a></li>
+			</ul>
+		</nav>
+		<div class="hero">
+			<div>
+				<slot />
+			</div>
+		</div>
+
+		<script>
+			document.querySelector('.hamburger').addEventListener('click', () => {
+				document.querySelector('.hamburger').classList.toggle('active');
+				document.querySelector('nav ul').classList.toggle('active');
+			});
+
+			document.querySelectorAll('nav a').forEach(link => {
+				link.addEventListener('click', () => {
+					document.querySelector('.hamburger').classList.remove('active');
+					document.querySelector('nav ul').classList.remove('active');
+				});
+			});
+		</script>
+	</body>
+</html>
+
