@@ -166,6 +166,7 @@
   a.links {
     font-weight: bold;
     text-decoration: underline;
+    cursor: none;
   }
 
   a.links:hover {

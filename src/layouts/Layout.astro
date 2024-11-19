@@ -1,10 +1,12 @@
 ---
 import '../styles/global.css'
+import { ViewTransitions } from "astro:transitions";
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
+
 ---
 
 <!doctype html>
@@ -44,6 +46,8 @@ const { title } = Astro.props;
 				}
 			}
 		</style>
+
+		<ViewTransitions />
 	</head>
 	<body>
 		<div id="custom-cursor"></div>
@@ -71,34 +75,47 @@ const { title } = Astro.props;
 		</div>
 
 		<script>
-			document.querySelector('.hamburger').addEventListener('click', () => {
-				document.querySelector('.hamburger').classList.toggle('active');
-				document.querySelector('nav ul').classList.toggle('active');
+			// Mover la lógica del cursor a una función
+			function initializeCursor() {
+				const cursor = document.getElementById('custom-cursor');
+				if (!cursor) return;
+
+				document.addEventListener('mousemove', (e) => {
+					cursor.style.display = 'block';
+					cursor.style.left = e.clientX + 'px';
+					cursor.style.top = e.clientY + 'px';
+				});
+
+				// Efecto hover en elementos clickeables
+				document.querySelectorAll('a, button, [role="button"]').forEach(element => {
+					element.addEventListener('mouseenter', () => {
+						cursor.style.transform = 'scale(1.2)';
+					});
+					
+					element.addEventListener('mouseleave', () => {
+						cursor.style.transform = 'scale(1)';
+					});
+				});
+			}
+
+			// Inicializar el cursor inmediatamente
+			initializeCursor();
+
+			// Reinicializar el cursor después de las transiciones de vista
+			document.addEventListener('astro:page-load', () => {
+				initializeCursor();
+			});
+
+			// Mantener el código del hamburger menu
+			document.querySelector('.hamburger')?.addEventListener('click', () => {
+				document.querySelector('.hamburger')?.classList.toggle('active');
+				document.querySelector('nav ul')?.classList.toggle('active');
 			});
 
 			document.querySelectorAll('nav a').forEach(link => {
 				link.addEventListener('click', () => {
-					document.querySelector('.hamburger').classList.remove('active');
-					document.querySelector('nav ul').classList.remove('active');
-				});
-			});
-
-			const cursor = document.getElementById('custom-cursor');
-
-			document.addEventListener('mousemove', (e) => {
-				cursor.style.display = 'block';
-				cursor.style.left = e.clientX + 'px';
-				cursor.style.top = e.clientY + 'px';
-			});
-
-			// Efecto hover en elementos clickeables
-			document.querySelectorAll('a, button, [role="button"]').forEach(element => {
-				element.addEventListener('mouseenter', () => {
-					cursor.style.transform = 'scale(1.2)';
-				});
-				
-				element.addEventListener('mouseleave', () => {
-					cursor.style.transform = 'scale(1)';
+					document.querySelector('.hamburger')?.classList.remove('active');
+					document.querySelector('nav ul')?.classList.remove('active');
 				});
 			});
 		</script>
