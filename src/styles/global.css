@@ -9,6 +9,7 @@
     background: #0a1f0a;
     color: #e0d5b3;
     line-height: 1.6;
+    cursor: url('/banana.png'), auto;
   }
   
   nav {
@@ -335,14 +336,14 @@
   }
 
   .content-wrapper {
-    max-width: 1200px;
+    max-width: 1700px;
     margin: 0 auto;
-    padding: 0 20vw;
+    padding: 0 10vw;
   }
 
   @media screen and (max-width: 1024px) {
     .content-wrapper {
-      padding: 0 10vw;
+      padding: 0 8vw;
     }
   }
 
@@ -405,4 +406,9 @@
       font-size: 1.1rem;
       padding: 0.5rem 1rem;
     }
+  }
+
+  /* Para elementos clickeables, podemos usar una versión más pequeña o rotada */
+  a, button, .hamburger, [role="button"] {
+    cursor: url('/banana.png'), pointer;
   }

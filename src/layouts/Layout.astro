@@ -11,15 +11,42 @@ const { title } = Astro.props;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content="Mono Mono Monoz" />
 		<meta name="viewport" content="width=device-width initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/banana.png" />
 		<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 		<title>{title}</title>
+		<style>
+			#custom-cursor {
+				width: 32px;
+				height: 32px;
+				background: url('/banana.png') no-repeat;
+				background-size: contain;
+				position: fixed;
+				 pointer-events: none;
+				z-index: 9999;
+				display: none;
+			}
+
+			/* Ocultar el cursor por defecto */
+			* {
+				cursor: none !important;
+			}
+
+			/* Solo mostrar cursor normal en dispositivos táctiles */
+			@media (hover: none) {
+				* {
+					cursor: auto !important;
+				}
+				#custom-cursor {
+					display: none !important;
+				}
+			}
+		</style>
 	</head>
 	<body>
+		<div id="custom-cursor"></div>
 		<nav>
 			<div class="hamburger">
 				<div></div>
@@ -53,6 +80,25 @@ const { title } = Astro.props;
 				link.addEventListener('click', () => {
 					document.querySelector('.hamburger').classList.remove('active');
 					document.querySelector('nav ul').classList.remove('active');
+				});
+			});
+
+			const cursor = document.getElementById('custom-cursor');
+
+			document.addEventListener('mousemove', (e) => {
+				cursor.style.display = 'block';
+				cursor.style.left = e.clientX + 'px';
+				cursor.style.top = e.clientY + 'px';
+			});
+
+			// Efecto hover en elementos clickeables
+			document.querySelectorAll('a, button, [role="button"]').forEach(element => {
+				element.addEventListener('mouseenter', () => {
+					cursor.style.transform = 'scale(1.2)';
+				});
+				
+				element.addEventListener('mouseleave', () => {
+					cursor.style.transform = 'scale(1)';
 				});
 			});
 		</script>
